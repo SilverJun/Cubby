@@ -199,6 +199,18 @@ void CubbyGame::KeyReleased(int key, int scancode, int mods)
 	case GLFW_KEY_V:
 	{
 		m_isKeyboardDown = false;
+
+		if (m_cameraMode == CameraMode::MouseRotate)
+		{
+			m_cameraDistance = 1.25f;
+		}
+		else if (m_cameraMode == CameraMode::FirstPerson)
+		{
+			m_cameraDistance = 10.0f;
+			m_maxCameraDistance = 10.0f;
+			m_pGameCamera->SetZoomAmount(10.0f);
+		}
+		UpdateCameraModeSwitching();
 		break;
 	}
 	case GLFW_KEY_SPACE:

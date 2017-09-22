@@ -75,8 +75,8 @@ void CubbyGame::UpdateCameraModeSwitching()
 				m_pAutoCameraOptionBox->SetToggled(true);
 			}
 
-			m_cameraDistance = 1.5f;
-			m_maxCameraDistance = 1.5f;
+			//m_cameraDistance = 1.5f;
+			//m_maxCameraDistance = 1.5f;
 
 			// Enter third person mode
 			m_pPlayer->SetThirdPersonMode();
