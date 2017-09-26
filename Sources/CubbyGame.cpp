@@ -268,6 +268,9 @@ void CubbyGame::Create(CubbySettings* pCubbySettings)
 	m_pFrontendManager->SetWindowDimensions(m_windowWidth, m_windowHeight);
 	m_pFrontendManager->SetCamera(m_pGameCamera);
 
+	// Create the Target System
+	m_pTargetSystem = new TargetSystem(m_pRenderer, m_pProjectileManager);
+
 	// Create the game GUI pages
 	m_pInventoryGUI = new InventoryGUI(m_pRenderer, m_pGUI, m_pFrontendManager, m_pChunkManager, m_pPlayer, m_pInventoryManager, m_windowWidth, m_windowHeight);
 	m_pCharacterGUI = new CharacterGUI(m_pRenderer, m_pGUI, m_pFrontendManager, m_pChunkManager, m_pPlayer, m_pInventoryManager, m_windowWidth, m_windowHeight);
@@ -453,6 +456,7 @@ void CubbyGame::Destroy()
 {
 	if (m_instance)
 	{
+		delete m_pTargetSystem;
 		delete m_pSkybox;
 		delete m_pChunkManager;
 		delete m_pItemManager;

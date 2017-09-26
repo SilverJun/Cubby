@@ -17,11 +17,11 @@ class CubbyObject
 {
 	CubbyObject()
 	{
-		++g_RegisteredObject;
+		++g_registeredObject;
 	}
 	~CubbyObject()
 	{
-		--g_RegisteredObject;
+		--g_registeredObject;
 	}
 };
 #else

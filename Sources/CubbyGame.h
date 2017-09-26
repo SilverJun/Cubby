@@ -48,6 +48,8 @@
 #include <Sounds/SoundEffects.h>
 #include <TextEffects/TextEffectsManager.h>
 
+#include "Contents/TargetSystem.h"
+
 #include "CubbySettings.h"
 #include "CubbyWindow.h"
 
@@ -381,6 +383,9 @@ private:
 
 	// Mods manager
 	ModsManager* m_pModsManager;
+
+	// Target System
+	TargetSystem* m_pTargetSystem;
 
 	// Mouse picking
 	int m_pickedObject;

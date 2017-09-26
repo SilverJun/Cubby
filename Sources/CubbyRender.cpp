@@ -20,6 +20,7 @@ void CubbyGame::PreRender() const
 	m_pEnemyManager->CalculateWorldTransformMatrix();
 	m_pItemManager->CalculateWorldTransformMatrix();
 	m_pProjectileManager->CalculateWorldTransformMatrix();
+	m_pTargetSystem->CalculateWorldTransformMatrix();
 }
 
 void CubbyGame::BeginShaderRender() const
@@ -182,6 +183,9 @@ void CubbyGame::Render()
 
 		// Items
 		m_pItemManager->Render(false, false, false, false);
+
+		// TargetSystem
+		m_pTargetSystem->Render();
 
 		// NPCs
 		m_pNPCManager->ResetNumRenderNPCs();

@@ -123,6 +123,9 @@ void CubbyGame::Update()
 		// Update the biome manager
 		//m_pBiomeManager->Update(m_deltaTime);
 
+		// Target System
+		m_pTargetSystem->Update(m_deltaTime);
+
 		// Player
 		if (m_animationUpdate)
 		{
