@@ -184,7 +184,7 @@ private:
 	Enemy* m_pOwnedEnemy;
 
 	// Voxel projectile
-	VoxelWeapon* m_pVoxeProjectile;
+	VoxelWeapon* m_pVoxelProjectile;
 };
 
 #endif

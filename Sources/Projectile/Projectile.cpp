@@ -28,22 +28,22 @@ Projectile::Projectile(Renderer* pRenderer, ChunkManager* pChunkManager, Qubicle
 	m_worldCollisionEnabled(true), m_explodeWorld(false), m_explosionRadius(1.0f),
 	m_returnToPlayer(false), m_catchTimer(0.0f), m_curveTimer(1.0f), m_curveTime(1.0f), m_rightCurve(true), m_returningDirectToPlayer(false),
 	m_pOwnedPlayer(nullptr), m_pOwnedNPC(nullptr), m_pOwnedEnemy(nullptr),
-	m_pVoxeProjectile(nullptr)
+	m_pVoxelProjectile(nullptr)
 {
 	LoadItem(objectFileName);
 
-	m_pVoxeProjectile->StartWeaponTrails();
+	m_pVoxelProjectile->StartWeaponTrails();
 }
 
 Projectile::~Projectile()
 {
-	m_pVoxeProjectile->StopWeaponTrails();
+	m_pVoxelProjectile->StopWeaponTrails();
 
 	UnloadEffectsAndLights();
 
-	if (m_pVoxeProjectile != nullptr)
+	if (m_pVoxelProjectile != nullptr)
 	{
-		delete m_pVoxeProjectile;
+		delete m_pVoxelProjectile;
 	}
 }
 
@@ -71,7 +71,7 @@ void Projectile::SetPlayer(Player* pPlayer)
 void Projectile::UnloadEffectsAndLights() const
 {
 	// Lights
-	for (size_t i = 0; i < m_pVoxeProjectile->GetNumLights(); ++i)
+	for (size_t i = 0; i < m_pVoxelProjectile->GetNumLights(); ++i)
 	{
 		unsigned int lightID;
 		glm::vec3 lightPos;
@@ -80,12 +80,12 @@ void Projectile::UnloadEffectsAndLights() const
 		Color lightColor;
 		bool connectedToSegment;
 
-		m_pVoxeProjectile->GetLightParams(i, &lightID, &lightPos, &lightRadius, &lightDiffuseMultiplier, &lightColor, &connectedToSegment);
+		m_pVoxelProjectile->GetLightParams(i, &lightID, &lightPos, &lightRadius, &lightDiffuseMultiplier, &lightColor, &connectedToSegment);
 
 		if (lightID != -1)
 		{
 			m_pLightingManager->RemoveLight(lightID);
-			m_pVoxeProjectile->SetLightingID(i, -1);
+			m_pVoxelProjectile->SetLightingID(i, -1);
 
 			if (connectedToSegment == false)
 			{
@@ -113,19 +113,19 @@ void Projectile::UnloadEffectsAndLights() const
 	}
 
 	// Particle Effects
-	for (size_t i = 0; i < m_pVoxeProjectile->GetNumParticleEffects(); ++i)
+	for (size_t i = 0; i < m_pVoxelProjectile->GetNumParticleEffects(); ++i)
 	{
 		unsigned int particleEffectID;
 		glm::vec3 particleEffectPos;
 		std::string effectName;
 		bool connectedToSegment;
 
-		m_pVoxeProjectile->GetParticleEffectParams(i, &particleEffectID, &particleEffectPos, &effectName, &connectedToSegment);
+		m_pVoxelProjectile->GetParticleEffectParams(i, &particleEffectID, &particleEffectPos, &effectName, &connectedToSegment);
 
 		if (particleEffectID != -1)
 		{
 			m_pBlockParticleManager->DestroyParticleEffect(particleEffectID);
-			m_pVoxeProjectile->SetParticleEffectID(i, -1);
+			m_pVoxelProjectile->SetParticleEffectID(i, -1);
 		}
 	}
 }
@@ -144,16 +144,16 @@ void Projectile::SetErase(bool isErase)
 // Setup
 void Projectile::LoadItem(const char* objectFileName)
 {
-	if (m_pVoxeProjectile == nullptr)
+	if (m_pVoxelProjectile == nullptr)
 	{
-		m_pVoxeProjectile = new VoxelWeapon(m_pRenderer, m_pQubicleBinaryManager);
+		m_pVoxelProjectile = new VoxelWeapon(m_pRenderer, m_pQubicleBinaryManager);
 	}
 
-	m_pVoxeProjectile->SetVoxelCharacterParent(nullptr);
-	m_pVoxeProjectile->LoadWeapon(objectFileName, false);
+	m_pVoxelProjectile->SetVoxelCharacterParent(nullptr);
+	m_pVoxelProjectile->LoadWeapon(objectFileName, false);
 
 	// Lights
-	for (size_t i = 0; i < m_pVoxeProjectile->GetNumLights(); i++)
+	for (size_t i = 0; i < m_pVoxelProjectile->GetNumLights(); i++)
 	{
 		unsigned int lightID;
 		glm::vec3 lightPos;
@@ -162,29 +162,29 @@ void Projectile::LoadItem(const char* objectFileName)
 		Color lightColor;
 		bool connectedToSegment;
 
-		m_pVoxeProjectile->GetLightParams(i, &lightID, &lightPos, &lightRadius, &lightDiffuseMultiplier, &lightColor, &connectedToSegment);
+		m_pVoxelProjectile->GetLightParams(i, &lightID, &lightPos, &lightRadius, &lightDiffuseMultiplier, &lightColor, &connectedToSegment);
 
 		if (lightID != -1)
 		{
 			m_pLightingManager->RemoveLight(lightID);
-			m_pVoxeProjectile->SetLightingID(i, -1);
+			m_pVoxelProjectile->SetLightingID(i, -1);
 		}
 	}
 
 	// Particle effects
-	for (size_t i = 0; i < m_pVoxeProjectile->GetNumParticleEffects(); ++i)
+	for (size_t i = 0; i < m_pVoxelProjectile->GetNumParticleEffects(); ++i)
 	{
 		unsigned int particleEffectID;
 		glm::vec3 particleEffectPos;
 		std::string effectName;
 		bool connectedToSegment;
 
-		m_pVoxeProjectile->GetParticleEffectParams(i, &particleEffectID, &particleEffectPos, &effectName, &connectedToSegment);
+		m_pVoxelProjectile->GetParticleEffectParams(i, &particleEffectID, &particleEffectPos, &effectName, &connectedToSegment);
 
 		if (particleEffectID != -1)
 		{
 			m_pBlockParticleManager->DestroyParticleEffect(particleEffectID);
-			m_pVoxeProjectile->SetParticleEffectID(i, -1);
+			m_pVoxelProjectile->SetParticleEffectID(i, -1);
 		}
 	}
 }
@@ -241,7 +241,7 @@ float Projectile::GetRadius() const
 
 void Projectile::UpdateRadius()
 {
-	m_radius = m_pVoxeProjectile->GetRenderScale() / 0.14f;
+	m_radius = m_pVoxelProjectile->GetRenderScale() / 0.14f;
 }
 
 glm::vec3 Projectile::GetCenter() const
@@ -407,11 +407,11 @@ void Projectile::Explode()
 {
 	CalculateWorldTransformMatrix();
 
-	if (m_pVoxeProjectile != nullptr)
+	if (m_pVoxelProjectile != nullptr)
 	{
-		for (int animatedSectionsIndex = 0; animatedSectionsIndex < m_pVoxeProjectile->GetNumAimatedSections(); ++animatedSectionsIndex)
+		for (int animatedSectionsIndex = 0; animatedSectionsIndex < m_pVoxelProjectile->GetNumAimatedSections(); ++animatedSectionsIndex)
 		{
-			AnimatedSection* pAnimatedSection = m_pVoxeProjectile->GetAnimatedSection(animatedSectionsIndex);
+			AnimatedSection* pAnimatedSection = m_pVoxelProjectile->GetAnimatedSection(animatedSectionsIndex);
 			QubicleBinary* pQubicleModel = pAnimatedSection->pVoxelObject->GetQubicleModel();
 		
 			m_pBlockParticleManager->ExplodeQubicleBinary(pQubicleModel, m_renderScale, 100);
@@ -525,14 +525,14 @@ void Projectile::CalculateWorldTransformMatrix()
 // Updating
 void Projectile::Update(float dt)
 {
-	if (m_pVoxeProjectile != nullptr)
+	if (m_pVoxelProjectile != nullptr)
 	{
 		CalculateWorldTransformMatrix();
 
-		m_pVoxeProjectile->Update(dt);
+		m_pVoxelProjectile->Update(dt);
 
-		m_pVoxeProjectile->SetWeaponTrailsParams(m_worldMatrix, m_renderScale);
-		m_pVoxeProjectile->CreateWeaponTrailPoint();
+		m_pVoxelProjectile->SetWeaponTrailsParams(m_worldMatrix, m_renderScale);
+		m_pVoxelProjectile->CreateWeaponTrailPoint();
 	}
 
 	if (m_isErase == true)
@@ -663,9 +663,9 @@ void Projectile::UpdateProjectileLights() const
 		return;
 	}
 
-	if (m_pVoxeProjectile != nullptr)
+	if (m_pVoxelProjectile != nullptr)
 	{
-		for (size_t i = 0; i < m_pVoxeProjectile->GetNumLights(); ++i)
+		for (size_t i = 0; i < m_pVoxelProjectile->GetNumLights(); ++i)
 		{
 			unsigned int lightID;
 			glm::vec3 lightPos;
@@ -674,12 +674,12 @@ void Projectile::UpdateProjectileLights() const
 			Color lightColor;
 			bool connectedToSegment;
 
-			m_pVoxeProjectile->GetLightParams(i, &lightID, &lightPos, &lightRadius, &lightDiffuseMultiplier, &lightColor, &connectedToSegment);
+			m_pVoxelProjectile->GetLightParams(i, &lightID, &lightPos, &lightRadius, &lightDiffuseMultiplier, &lightColor, &connectedToSegment);
 
 			if (lightID == -1)
 			{
 				m_pLightingManager->AddLight(glm::vec3(0.0f, 0.0f, 0.0f), 0.0f, 1.0f, Color(1.0f, 1.0f, 1.0f, 1.0f), &lightID);
-				m_pVoxeProjectile->SetLightingID(i, lightID);
+				m_pVoxelProjectile->SetLightingID(i, lightID);
 			}
 
 			if (connectedToSegment == false)
@@ -717,21 +717,21 @@ void Projectile::UpdateProjectileParticleEffects() const
 		return;
 	}
 
-	if (m_pVoxeProjectile != nullptr)
+	if (m_pVoxelProjectile != nullptr)
 	{
-		for (size_t i = 0; i < m_pVoxeProjectile->GetNumParticleEffects(); ++i)
+		for (size_t i = 0; i < m_pVoxelProjectile->GetNumParticleEffects(); ++i)
 		{
 			unsigned int particleEffectID;
 			glm::vec3 particleEffectPos;
 			std::string effectName;
 			bool connectedToSegment;
 
-			m_pVoxeProjectile->GetParticleEffectParams(i, &particleEffectID, &particleEffectPos, &effectName, &connectedToSegment);
+			m_pVoxelProjectile->GetParticleEffectParams(i, &particleEffectID, &particleEffectPos, &effectName, &connectedToSegment);
 
 			if (particleEffectID == -1)
 			{
 				m_pBlockParticleManager->ImportParticleEffect(effectName, particleEffectPos, &particleEffectID);
-				m_pVoxeProjectile->SetParticleEffectID(i, particleEffectID);
+				m_pVoxelProjectile->SetParticleEffectID(i, particleEffectID);
 			}
 
 			if (connectedToSegment == false)
@@ -766,7 +766,7 @@ void Projectile::Render() const
 		return;
 	}
 
-	if (m_pVoxeProjectile != nullptr)
+	if (m_pVoxelProjectile != nullptr)
 	{
 		Color outlineColor(1.0f, 1.0f, 0.0f, 1.0f);
 
@@ -774,7 +774,7 @@ void Projectile::Render() const
 
 		m_pRenderer->MultiplyWorldMatrix(m_worldMatrix);
 		m_pRenderer->ScaleWorldMatrix(m_renderScale, m_renderScale, m_renderScale);
-		m_pVoxeProjectile->Render(false, false, false, outlineColor);
+		m_pVoxelProjectile->Render(false, false, false, outlineColor);
 
 		m_pRenderer->PopMatrix();
 	}
@@ -784,7 +784,7 @@ void Projectile::RenderWeaponTrails() const
 {
 	m_pRenderer->PushMatrix();
 
-	m_pVoxeProjectile->RenderWeaponTrails();
+	m_pVoxelProjectile->RenderWeaponTrails();
 
 	m_pRenderer->PopMatrix();
 }

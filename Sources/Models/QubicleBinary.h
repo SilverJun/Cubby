@@ -168,7 +168,7 @@ public:
 	void SetWireFrameRender(bool wireframe);
 
 	// Rendering
-	void Render(bool renderOutline, bool reflection, bool silhouette, Color outlixneColor);
+	void Render(bool renderOutline, bool reflection, bool silhouette, Color outlineColor);
 	void RenderWithAnimator(MS3DAnimator** pSkeleton, VoxelCharacter* pVoxelCharacter, bool renderOutline, bool reflection, bool silhouette, Color outlineColor, bool subSelectionNamePicking);
 	void RenderSingleMatrix(MS3DAnimator** pSkeleton, VoxelCharacter* pVoxelCharacter, std::string matrixName, bool renderOutline, bool silhouette, Color outlineColor);
 	void RenderFace(MS3DAnimator* pSkeleton, VoxelCharacter* pVoxelCharacter, bool transparency, bool useScale = true, bool useTranslate = true);
