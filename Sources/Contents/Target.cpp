@@ -52,3 +52,8 @@ void Target::Render()
 	m_pTargetObject->Render(false, false, false, Color());
 	m_pRenderer->PopMatrix();
 }
+
+void Target::SetPosition(glm::vec3 worldPosition)
+{
+	m_position = worldPosition;
+}

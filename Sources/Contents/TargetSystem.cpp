@@ -5,6 +5,7 @@
 TargetSystem::TargetSystem(Renderer* pRenderer, ProjectileManager* pProjectileManager) : m_pRenderer(pRenderer), m_pProjectileManager(pProjectileManager)
 {
 	m_pTarget = new Target(m_pRenderer);
+	
 }
 
 TargetSystem::~TargetSystem()
@@ -26,6 +27,8 @@ void TargetSystem::Update(float dt)
 			{
 				pProjectile->Explode();
 				// Target 위치 재생성
+				glm::vec3 tempPosition(GetRandomNumber(37, 47, 2), 2.8f, GetRandomNumber(27, 34, 2));
+				m_pTarget->SetPosition(tempPosition);
 			}
 		}
 	}

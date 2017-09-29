@@ -24,6 +24,8 @@ public:
 
 	void Render();
 
+	void SetPosition(glm::vec3 worldPosition);
+
 private:
 	Renderer* m_pRenderer;
 

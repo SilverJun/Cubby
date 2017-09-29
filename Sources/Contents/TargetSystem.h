@@ -10,6 +10,7 @@
 #ifndef CUBBY_TARGET_SYSTEM_H
 #define CUBBY_TARGET_SYSTEM_H
 
+#include "Utils/Random.h"
 #include "Target.h"
 
 class Projectile;
@@ -27,11 +28,9 @@ public:
 	void Update(float dt);
 	void CalculateWorldTransformMatrix();
 	void Render();
-
 private:
 	Renderer* m_pRenderer;
 	ProjectileManager* m_pProjectileManager;
-
 	Target* m_pTarget;
 };
 
