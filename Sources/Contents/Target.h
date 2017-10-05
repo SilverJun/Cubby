@@ -38,6 +38,9 @@ private:
 	// Projectile hitbox
 	float m_projectileHitboxRadius;
 	glm::vec3 m_projectileHitboxCenterOffset;
+	float m_projectileHitboxXLength;
+	float m_projectileHitboxYLength;
+	float m_projectileHitboxZLength;
 };
 
 #endif
